@@ -45,10 +45,6 @@ pip install -r requirements.tx
 3️⃣ Run the App
 python app.py
 
-
-Open your browser and go to:
-👉 http://http://127.0.0.1:5501/
-
 🚀 Usage
 
 Sign Up / Log In with your email & password
