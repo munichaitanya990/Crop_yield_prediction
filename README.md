@@ -31,7 +31,7 @@ Crop_Yield_Prediction/
 
 ⚙️ Installation & Setup
 1️⃣ Clone the Repository
-git clone https://github.com/your-username/crop-yield-prediction.git
+git clone https://github.com/munichaitanya990/Crop_yield_prediction
 cd crop-yield-prediction
 
 2️⃣ Create Virtual Environment & Install Dependencies
