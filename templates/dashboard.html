@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI-Powered Crop Yield Prediction & Optimization</title>
+  <style>
+    /* Basic layout + styling */
+    :root{
+      background-image: url(https://res.cloudinary.com/distyfozy/image/upload/v1758212141/OIP_vmlng0.webp); 
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      --card:#fff;
+      --accent:#0b5cff;
+      --muted:#6b7280;
+      --pill:#eef2ff;
+    }
+    body{
+      background-image: url(https://res.cloudinary.com/distyfozy/image/upload/v1758212141/OIP_vmlng0.webp); 
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      margin:0;
+      font-family: Inter, system-ui, Arial, sans-serif;
+      background:var(--bg);
+      color:#0b1326;
+      padding:20px;
+    }
+    .container{ max-width:1100px; margin:0 auto; }
+     header { background:#353d46; border-radius: 20px; color:white; padding:15px; display:flex; justify-content:space-between; align-items:center; }
+    .title{ font-size:24px; font-weight:700; display:flex; align-items:center; gap:12px; }
+    .badge{ background:#111827; color:white; padding:6px 10px; border-radius:8px; font-size:12px; }
+    .grid{ display:grid; grid-template-columns: 1fr 420px; gap:18px; margin-top:16px; }
+    .card{ background:var(--card); padding:18px; border-radius:12px; box-shadow:0 6px 18px rgba(12,20,30,0.06); }
+    h2{ margin:0 0 12px 0; font-size:18px; }
+    .row{ display:flex; gap:12px; flex-wrap:wrap; }
+    .row3{ display:grid; grid-template-columns: repeat(3, 1fr); gap:10px; margin-top:10px; }
+    .field{ min-width:100px; display:flex; flex-direction:column; gap:6px; }
+    label{ font-size:13px; color:var(--muted); }
+    input[type="range"]{ width:100%; }
+    input[type="number"], select { padding:8px; border-radius:8px; border:1px solid #e6e9ef; }
+    button{ padding:10px 12px; border-radius:8px; border:none; background:var(--accent); color:#fff; cursor:pointer; }
+    button.secondary{ background:#6b7280; }
+    .metric{ display:flex; gap:18px; align-items:center; margin-top:12px; }
+    .value{ font-size:28px; font-weight:700; color:#08306a; }
+    .hint{ font-size:12px; color:var(--muted); }
+    .stack{ display:flex; flex-direction:column; gap:10px; }
+    .divider{ height:1px; background:#eef2ff; margin:8px 0; border-radius:2px;}
+    .pill{ background:var(--pill); padding:6px 8px; border-radius:8px; font-size:13px; display:inline-block; }
+    .legend{ font-size:12px; color:var(--muted); margin-top:8px; }
+    .heatmap{ display:grid; grid-template-columns: repeat(7, 1fr); gap:6px; margin-top:10px; }
+    .cell{ height:34px; border-radius:6px; border:1px solid rgba(0,0,0,0.06); box-shadow:inset 0 -2px 0 rgba(255,255,255,0.02); cursor:default; }
+    .footer{ font-size:12px; color:var(--muted); margin-top:12px; }
+    @media (max-width:900px){
+      .grid{ grid-template-columns: 1fr; }
+      .row3{ grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header> 
+      <h1>🌾 AI-Powered Crop Yield Prediction And Optimization 🌾</h1> 
+    </header>
+
+    <div class="grid" style="margin-top:16px;">
+      <!-- Inputs -->
+      <section class="card">
+        <h2>Inputs</h2>
+        <div class="row" style="margin-bottom:8px;">
+          <div class="field">
+            <label>Region</label>
+            <select id="region">
+              <option value="north">north</option><option value="south">south</option><option value="east">east</option><option value="west">west</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Crop</label>
+            <select id="crop">
+              <option value="wheat">wheat</option><option value="maize">maize</option><option value="rice">rice</option><option value="Millet">Millet</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Vegetable</label>
+            <select id="vegitables">
+              <option value="tomato">tomato</option><option value="brinjal">brinjal</option><option value="onion">onion</option><option value="potato">potato</option><option value="carrot">carrot</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Pulses</label>
+            <select id="pulses">
+              <option value="green_gram">Green gram</option><option value="red_gram">Red gram</option><option value="black_gram">black gram</option><option value="Bengal_Gram">Bengal_Gram</option><option value="peas">Peas</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Fruits</label>
+            <select id="Fruits">
+              <option value="Apple">Apple</option><option value="Orange">Orange</option><option value="Pineapple">Pineapple</option><option value="Grapes">Grapes</option><option value="Mango">Mango</option><option value="Banana">Banana</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row3">
+          <div class="field"><label>Soil pH <span class="hint" id="v_soil_ph"></span></label><input id="soil_ph" type="range" min="4.5" max="8.5" step="0.1" value="6.5"></div>
+          <div class="field"><label>Soil N (%) <span class="hint" id="v_soil_n"></span></label><input id="soil_n" type="range" min="0.05" max="0.6" step="0.01" value="0.25"></div>
+          <div class="field"><label>Soil P (ppm) <span class="hint" id="v_soil_p"></span></label><input id="soil_p" type="range" min="5" max="60" step="1" value="25"></div>
+
+          <div class="field"><label>Soil K (ppm) <span class="hint" id="v_soil_k"></span></label><input id="soil_k" type="range" min="80" max="350" step="5" value="210"></div>
+          <div class="field"><label>Soil Moisture (%) <span class="hint" id="v_soil_moisture"></span></label><input id="soil_moisture" type="range" min="5" max="60" step="1" value="28"></div>
+          <div class="field"><label>Avg Temp (°C) <span class="hint" id="v_avg_temp"></span></label><input id="avg_temp" type="range" min="10" max="40" step="1" value="22"></div>
+
+          <div class="field"><label>Season Rainfall (mm) <span class="hint" id="v_rainfall"></span></label><input id="rainfall" type="range" min="0" max="800" step="10" value="200"></div>
+          <div class="field"><label>Humidity (%) <span class="hint" id="v_humidity"></span></label><input id="humidity" type="range" min="20" max="100" step="1" value="60"></div>
+          <div class="field"><label>Sowing Day (DOY) <span class="hint" id="v_sowing_day"></span></label><input id="sowing_day" type="range" min="1" max="120" step="1" value="30"></div>
+
+          <div class="field"><label>Harvest Day (DOY) <span class="hint" id="v_harvest_day"></span></label><input id="harvest_day" type="range" min="90" max="300" step="1" value="150"></div>
+          <div class="field"><label>Prev. Yield (t/ha) <span class="hint" id="v_previous_yield"></span></label><input id="previous_yield" type="range" min="1" max="7" step="0.1" value="3.5"></div>
+          <div class="field"><label>Fertilizer (kg/ha) <span class="hint" id="v_fertilizer_rate"></span></label><input id="fertilizer_rate" type="range" min="40" max="260" step="5" value="120"></div>
+
+          <div class="field"><label>Irrigation (mm) <span class="hint" id="v_irrigation_mm"></span></label><input id="irrigation_mm" type="range" min="0" max="400" step="5" value="80"></div>
+          <div class="field"><label>Pesticides (l/ha) <span class="hint" id="v_pesticides"></span></label><input id="pesticides" type="range" min="0" max="10" step="0.1" value="0.0"></div>
+        </div>
+
+        <div style="margin-top:12px;" class="actions">
+          <button id="predictBtn">Predict yield</button>
+          <button id="optBtn" class="secondary">Optimize inputs</button>
+        </div>
+
+        <div class="metric" id="predMetric" style="display:none;">
+          <div>
+            <div class="value" id="predValue">0.00</div>
+            <small>Predicted Yield (t/ha)</small>
+          </div>
+          <div id="explain" class="hint"></div>
+        </div>
+
+        <div id="optBlock" style="display:none;" class="stack">
+          <div class="divider"></div>
+          <div class="row">
+            <div class="field">
+              <label>Fertilizer search (kg/ha)</label>
+              <input id="fertRangeMin" type="number" value="60"> 
+            </div>
+            <div class="field">
+              <label>to</label>
+              <input id="fertRangeMax" type="number" value="220"> 
+            </div>
+          </div>
+          <div class="row">
+            <div class="field">
+              <label>Irrigation search (mm)</label>
+              <input id="irrRangeMin" type="number" value="0"> 
+            </div>
+            <div class="field">
+              <label>to</label>
+              <input id="irrRangeMax" type="number" value="250"> 
+            </div>
+          </div>
+          <div class="actions">
+            <button id="runOpt">Run Optimizer</button>
+          </div>
+          <div class="metric" id="optMetric" style="display:none;">
+            <div>
+              <div class="value" id="optYield">0.00</div>
+              <small>Best Predicted Yield (t/ha)</small>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <div class="pill">Fertilizer: <b id="optFert">—</b></div>
+              <div class="pill">Irrigation: <b id="optIrr">—</b></div>
+            </div>
+          </div>
+          <div class="legend"><span style="width:20px;height:12px;border-radius:4px;background:#0b1326;border:1px solid #273248;display:inline-block;margin-right:8px;"></span> Search heatmap (darker = higher yield)</div>
+          <div id="heatmap" class="heatmap"></div>
+        </div>
+      </section>
+
+      <!-- Output / Notes -->
+      <section class="card">
+        <h2>How it works (prototype)</h2>
+        <p class="hint">This is a client-side demo: a simple ML-like function estimates yield using agronomic heuristics (temperature & pH optima by crop, nutrients, water balance, fertilizer response) and a tiny search suggests better fertilizer/irrigation.</p>
+        <ul style="line-height:1.6">
+          <li>Change sliders ➜ press <b>Predict</b> to get yield.</li>
+          <li>Click <b>Optimize</b> ➜ set search ranges ➜ <b>Run Optimizer</b>.</li>
+          <li>Use in a pitch as: “AI turns data into actionable input recommendations.”</li>
+        </ul>
+        <div class="divider"></div>
+        <div class="stack">
+          <div class="pill">No internet • Runs fully in the browser</div>
+          <div class="pill">Replace the heuristic with a real model API for production</div>
+        </div>
+        <div class="footer">© Your Team • Hackathon demo</div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    // --- Small util helpers ---
+    const $ = id => document.getElementById(id);
+
+    const fields = [
+      "soil_ph","soil_n","soil_p","soil_k","soil_moisture",
+      "avg_temp","rainfall","humidity","sowing_day","harvest_day",
+      "previous_yield","fertilizer_rate","irrigation_mm","pesticides"
+    ];
+
+    const hints = {
+      soil_ph: $('v_soil_ph'), soil_n:$('v_soil_n'), soil_p:$('v_soil_p'), soil_k:$('v_soil_k'),
+      soil_moisture:$('v_soil_moisture'), avg_temp:$('v_avg_temp'), rainfall:$('v_rainfall'), humidity:$('v_humidity'),
+      sowing_day:$('v_sowing_day'), harvest_day:$('v_harvest_day'), previous_yield:$('v_previous_yield'),
+      fertilizer_rate:$('v_fertilizer_rate'), irrigation_mm:$('v_irrigation_mm'), pesticides:$('v_pesticides')
+    };
+
+    const syncHints = ()=> fields.forEach(k=>{
+      const el = $(k);
+      const hint = hints[k];
+      if(el && hint) hint.textContent = el.value;
+    });
+    syncHints();
+    fields.forEach(k=> {
+      const el = $(k);
+      if(el) el.addEventListener('input', syncHints);
+    });
+
+    function getPayload(){
+      const p = {
+        region: $('region').value,
+        crop: $('crop').value,
+        soil_ph: +$('soil_ph').value,
+        soil_n: +$('soil_n').value,
+        soil_p: +$('soil_p').value,
+        soil_k: +$('soil_k').value,
+        soil_moisture: +$('soil_moisture').value,
+        avg_temp: +$('avg_temp').value,
+        rainfall: +$('rainfall').value,
+        humidity: +$('humidity').value,
+        sowing_day: +$('sowing_day').value,
+        harvest_day: +$('harvest_day').value,
+        fertilizer_rate: +$('fertilizer_rate').value,
+        irrigation_mm: +$('irrigation_mm').value,
+        pesticides: +$('pesticides').value,
+        previous_yield: +$('previous_yield').value,
+      };
+      return p;
+    }
+
+    // --- Heuristic "model" mirroring the Python prototype ---
+    function predictYield(p){
+      const tempOptMap = {wheat:20, maize:25, rice:27, soybean:23};
+      const phOptMap   = {wheat:6.5, maize:6.2, rice:6.0, soybean:6.3};
+
+      const tempOpt = tempOptMap[p.crop] ?? 24;
+      const phOpt   = phOptMap[p.crop] ?? 6.3;
+
+      const tempEffect = -0.02 * Math.pow(p.avg_temp - tempOpt, 2) + 0.8; // ~[0,1-ish]
+      const phEffect   = -0.3  * Math.pow(p.soil_ph - phOpt,    2) + 1.0; // ~[0,1.0+]
+      const waterEffect = Math.tanh((p.rainfall + p.irrigation_mm - 250)/200) + 1.0;
+      const fertEffect  = Math.tanh((p.fertilizer_rate - 80)/80) + 1.0;
+
+      const nEff = clamp(p.soil_n*4.0, 0, 2.5);
+      const pEff = clamp(p.soil_p/40.0, 0, 1.5);
+      const kEff = clamp(p.soil_k/250.0, 0, 1.2);
+
+      const baseMap = {wheat:3.5, maize:5.0, rice:4.8, soybean:3.0};
+      const base = baseMap[p.crop] ?? 3.2;
+      const prev = (0.85 + 0.15*(p.previous_yield/6.5));
+
+      let y = base * (Math.max(0.05,tempEffect)) * (Math.max(0.05, phEffect)) *
+              (0.8+0.2*nEff) * (0.8+0.2*pEff) * (0.8+0.2*kEff) *
+              (0.9+0.2*waterEffect) * (0.9+0.2*fertEffect);
+      y *= prev;
+      return Math.max(0.05, y);
+    }
+    function clamp(v, lo, hi){return Math.min(hi, Math.max(lo, v));}
+
+    // --- Optimization over Fertilizer & Irrigation ---
+    function optimize(template, fertMin=60, fertMax=220, irrMin=0, irrMax=250, fertStep=5, irrStep=10){
+      let best = {predicted_yield:-Infinity, fertilizer_rate:null, irrigation_mm:null};
+      for(let f=fertMin; f<=fertMax; f+=fertStep){
+        for(let w=irrMin; w<=irrMax; w+=irrStep){
+          const p = {...template, fertilizer_rate:f, irrigation_mm:w};
+          const y = predictYield(p);
+          if(y > best.predicted_yield){ best = {predicted_yield:y, fertilizer_rate:f, irrigation_mm:w}; }
+        }
+      }
+      return best;
+    }
+
+    // --- UI wiring ---
+    $('predictBtn').addEventListener('click', ()=>{
+      const p = getPayload();
+      const y = predictYield(p);
+      $('predMetric').style.display='flex';
+      $('predValue').textContent = y.toFixed(2);
+      $('explain').textContent = `Crop ${p.crop} • temp ${p.avg_temp}°C • pH ${p.soil_ph}`;
+    });
+
+    $('optBtn').addEventListener('click', ()=>{
+      const block = $('optBlock');
+      // toggle
+      block.style.display = (block.style.display === 'none' || block.style.display === '') ? 'block' : 'none';
+    });
+
+    $('runOpt').addEventListener('click', ()=>{
+      const p = getPayload();
+      const fertMin = +$('fertRangeMin').value, fertMax= +$('fertRangeMax').value;
+      const irrMin  = +$('irrRangeMin').value,  irrMax = +$('irrRangeMax').value;
+
+      const best = optimize(p, fertMin, fertMax, irrMin, irrMax);
+      $('optMetric').style.display='flex';
+      $('optYield').textContent = best.predicted_yield.toFixed(2);
+      $('optFert').textContent = `${best.fertilizer_rate} kg/ha`;
+      $('optIrr').textContent = `${best.irrigation_mm} mm`;
+
+      // quick 7x7 heatmap visualization of search space around best
+      renderHeatmap(p, fertMin, fertMax, irrMin, irrMax, best);
+    });
+
+    function renderHeatmap(tpl, fMin, fMax, wMin, wMax, best){
+      const grid = $('heatmap');
+      grid.innerHTML='';
+      const cols = 7, rows = 7;
+      for(let r=0;r<rows;r++){
+        for(let c=0;c<cols;c++){
+          const f = Math.round(fMin + (fMax-fMin)*(c/(cols-1)));
+          const w = Math.round(wMin + (wMax-wMin)*(r/(rows-1)));
+          const y = predictYield({...tpl, fertilizer_rate:f, irrigation_mm:w});
+          const rel = y / (best.predicted_yield||1);
+          const cell = document.createElement('div');
+          cell.className='cell';
+          const alpha = clamp(rel, 0.25, 1); // use alpha to represent intensity
+          // create a soft gradient with alpha depending on relative yield
+          cell.style.background = `linear-gradient(180deg, rgba(125,211,252,${alpha*0.35}), rgba(167,139,250,${alpha*0.35}))`;
+          cell.title = `Fert ${f} | Irr ${w} => ${y.toFixed(2)} t/ha`;
+          grid.appendChild(cell);
+        }
+      }
+    }
+
+    // initialize hints display
+    syncHints();
+  </script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farm Connect</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #bfd19b95;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="form-container" class="w-full max-w-md bg-white p-8 md:p-10 rounded-3xl shadow-2xl border border-gray-200">
+        <!-- LOGIN SECTION -->
+        <div id="login-section">
+            <div class="text-center">
+                <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-2">🌱Grow with Us 🌱</h1>
+                <p class="text-sm text-gray-500 mb-8">Sign in to your farm account</p>
+            </div>
+
+            <form id="login-form" class="space-y-6">
+                <div>
+                    <label for="login-email" class="block text-sm font-medium text-gray-700 mb-1">Farm Email</label>
+                    <input id="login-email" type="email" autocomplete="email" required
+                           class="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition duration-200 ease-in-out">
+                </div>
+
+                <div>
+                    <label for="login-password" class="block text-sm font-medium text-gray-700 mb-1">Farm Password</label>
+                    <input id="login-password" type="password" autocomplete="current-password" required
+                           class="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition duration-200 ease-in-out">
+                </div>
+
+                <button type="submit" class="w-full py-3 px-4 rounded-xl text-white font-semibold bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition duration-200 ease-in-out shadow-md hover:shadow-lg">
+                     Harvest! 
+                </button>
+            </form>
+            
+            <div id="login-message-box" class="mt-6 p-4 text-center text-sm font-medium rounded-xl transition-all duration-300 ease-in-out hidden"></div>
+            
+            <div class="mt-8 text-center text-sm text-gray-500">
+                New to the farm?
+                <a href="#" id="show-signup-link" class="font-medium text-green-600 hover:text-green-500">Sign Up🌴</a>
+            </div>
+        </div>
+
+        <!-- SIGNUP SECTION -->
+        <div id="signup-section" class="hidden">
+            <div class="text-center">
+                <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-2">🌾Sow the Seeds 👩‍🌾</h1>
+                <p class="text-sm text-gray-500 mb-8">Create your new farm account</p>
+            </div>
+
+            <form id="signup-form" class="space-y-6">
+                <div>
+                    <label for="signup-name" class="block text-sm font-medium text-gray-700 mb-1">Your Full Name</label>
+                    <input id="signup-name" type="text" required
+                           class="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition duration-200 ease-in-out">
+                </div>
+
+                <div>
+                    <label for="signup-email" class="block text-sm font-medium text-gray-700 mb-1">Farm Email</label>
+                    <input id="signup-email" type="email" autocomplete="email" required
+                           class="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition duration-200 ease-in-out">
+                </div>
+
+                <div>
+                    <label for="signup-password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                    <input id="signup-password" type="password" autocomplete="new-password" required
+                           class="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition duration-200 ease-in-out">
+                </div>
+
+                <button type="submit" class="w-full py-3 px-4 rounded-xl text-white font-semibold bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition duration-200 ease-in-out shadow-md hover:shadow-lg">
+                    Plant the Seed! 
+                </button>
+            </form>
+            
+            <div id="signup-message-box" class="mt-6 p-4 text-center text-sm font-medium rounded-xl transition-all duration-300 ease-in-out hidden"></div>
+
+            <div class="mt-8 text-center text-sm text-gray-500">
+                Already have a farm account?
+                <a href="#" id="show-login-link" class="font-medium text-green-600 hover:text-green-500">Log In🌴</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loginSection = document.getElementById('login-section');
+            const signupSection = document.getElementById('signup-section');
+            const showSignupLink = document.getElementById('show-signup-link');
+            const showLoginLink = document.getElementById('show-login-link');
+            const loginForm = document.getElementById('login-form');
+            const signupForm = document.getElementById('signup-form');
+            const loginMessageBox = document.getElementById('login-message-box');
+            const signupMessageBox = document.getElementById('signup-message-box');
+
+            // Toggle sections
+            showSignupLink.addEventListener('click', e => {
+                e.preventDefault();
+                loginSection.classList.add('hidden');
+                signupSection.classList.remove('hidden');
+            });
+            showLoginLink.addEventListener('click', e => {
+                e.preventDefault();
+                signupSection.classList.add('hidden');
+                loginSection.classList.remove('hidden');
+            });
+
+            // Signup Form Submission
+            signupForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                const name = document.getElementById('signup-name').value;
+                const email = document.getElementById('signup-email').value;
+                const password = document.getElementById('signup-password').value;
+
+                if (!name || !email || !password) {
+                    showMessage("Please fill out all fields.", 'error', signupMessageBox);
+                    return;
+                }
+
+                // Save in localStorage
+                localStorage.setItem('farmName', name);
+                localStorage.setItem('farmEmail', email);
+                localStorage.setItem('farmPassword', password);
+
+                showMessage("Account created successfully!", 'success', signupMessageBox);
+            });
+
+            // Login Form Submission
+            loginForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                const email = document.getElementById('login-email').value;
+                const password = document.getElementById('login-password').value;
+
+                const storedEmail = localStorage.getItem('farmEmail');
+                const storedPassword = localStorage.getItem('farmPassword');
+
+                if (!email || !password) {
+                    showMessage("Please fill out both fields.", 'error', loginMessageBox);
+                    return;
+                }
+
+                if (email === storedEmail && password === storedPassword) {
+                    showMessage("Login successful! Redirecting...", 'success', loginMessageBox);
+                    setTimeout(() => {
+                        window.location.href = "dashboard.html"; // redirect to your dashboard page
+                    }, 1500);
+                } else {
+                    showMessage("Invalid email or password. Try again!", 'error', loginMessageBox);
+                }
+            });
+
+            function showMessage(message, type, messageBox) {
+                messageBox.textContent = message;
+                messageBox.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800', 'bg-blue-100', 'text-blue-800');
+                messageBox.classList.add('block');
+
+                if (type === 'success') messageBox.classList.add('bg-green-100', 'text-green-800');
+                else if (type === 'error') messageBox.classList.add('bg-red-100', 'text-red-800');
+                else if (type === 'info') messageBox.classList.add('bg-blue-100', 'text-blue-800');
+            }
+        });
+    </script>
+</body>
+</html>
